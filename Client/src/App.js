@@ -7,6 +7,7 @@ import Home from "./reservation/Home";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
 import Profile from "./user/Profile";
+import ProfileBooking from "./user/ProfileBooking";
 
 function App() {
   return (
@@ -18,6 +19,11 @@ function App() {
         <Route exact path="/login" component={Login} />
         <Route exact path="/register" component={Register} />
         <PrivateRoute exact path="/profile" component={Profile} />
+        <PrivateRoute
+          exact
+          path="/profile/bookings"
+          component={ProfileBooking}
+        />
       </Switch>
     </BrowserRouter>
   );

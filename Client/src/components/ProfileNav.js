@@ -1,16 +1,25 @@
 import { Nav } from "react-bootstrap";
 
 const ProfileNav = () => {
+  const active = window.location.pathname;
+
   return (
-    <Nav justify variant="tabs" defaultActiveKey="/profile">
+    <Nav justify variant="tabs">
       <Nav.Item>
-        <Nav.Link href="/profile">Profile</Nav.Link>
+        <Nav.Link
+          className={`${active === "/profile" && "active"}`}
+          href="/profile"
+        >
+          Profile
+        </Nav.Link>
       </Nav.Item>
       <Nav.Item>
-        <Nav.Link eventKey="/bookings">Bookings</Nav.Link>
-      </Nav.Item>
-      <Nav.Item>
-        <Nav.Link eventKey="/hotels">Hotels</Nav.Link>
+        <Nav.Link
+          className={`${active === "/profile/bookings" && "active"}`}
+          href="/profile/bookings"
+        >
+          Bookings
+        </Nav.Link>
       </Nav.Item>
     </Nav>
   );
