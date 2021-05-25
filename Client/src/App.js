@@ -4,8 +4,8 @@ import "react-toastify/dist/ReactToastify.css";
 import PrivateRoute from "./components/PrivateRoute";
 import MenuNav from "./components/MenuNav";
 import Home from "./reservation/Home";
-import Login from "./auth/Login";
-import Register from "./auth/Register";
+import Login from "./auth-user/Login";
+import Register from "./auth-user/Register";
 import Profile from "./user/Profile";
 import ProfileBooking from "./user/ProfileBooking";
 

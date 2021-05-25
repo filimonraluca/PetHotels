@@ -11,7 +11,7 @@ import {
 import PetsIcon from "@material-ui/icons/Pets";
 import GoogleLogin from "react-google-login";
 import { toast } from "react-toastify";
-import { loginUser, createUser, sendToken } from "../actions/auth";
+import { loginUser, createUser} from "../actions/auth";
 import { useDispatch } from "react-redux";
 
 const Login = ({ history }) => {
@@ -23,16 +23,24 @@ const Login = ({ history }) => {
       lastName: response.profileObj.givenName,
       email: response.profileObj.email,
     };
-    const data = await createUser(user);
-    console.log(data);
-    const token = {
+    const createData = await createUser(user);
+    console.log(createData);
+    const data = {
+      email: response.profileObj.email,
+      firstName: response.profileObj.familyName,
+      lastName: response.profileObj.givenName,
       token: response.tokenId,
     };
-    const res = await sendToken(token);
-    console.log(res);
+    //const res = await sendToken(token);
+    localStorage.setItem("auth-token", JSON.stringify(data));
+    dispatch({
+      type: "LOGGED_IN_USER",
+      payload: data,
+    });
+    history.push("/profile");
   };
 
-  let [username, setUserName] = useState();
+  let [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
   const dispatch = useDispatch();
@@ -44,14 +52,14 @@ const Login = ({ history }) => {
     margin: "20px auto",
   };
   const handleSubmit = async (e) => {
-    if (username === undefined) username = "";
+    if (email === undefined) email = "";
     e.preventDefault();
     console.log({
-      username,
+      email,
       password,
     });
     const data = await loginUser({
-      username,
+      email,
       password,
     });
     console.log(data);
@@ -77,9 +85,9 @@ const Login = ({ history }) => {
           <h2>Log in</h2>
         </Grid>
         <TextField
-          onChange={(e) => setUserName(e.target.value)}
-          label="Username"
-          placeholder="Enter username"
+          onChange={(e) => setEmail(e.target.value)}
+          label="Email"
+          placeholder="Enter email"
           fullWidth
           required
         />
@@ -96,26 +104,21 @@ const Login = ({ history }) => {
           onClick={handleSubmit}
           color="primary"
           variant="contained"
-          style={{ margin: "10px 0" }}
+          style={{ margin: "20px 0" }}
           fullWidth
         >
           Log in
         </Button>
-        <GoogleLogin
+        <GoogleLogin  style={{margin:"10px auto"}}
           clientId="758960901115-cs1pffg689v2qopd4lvlrqmfl1ivph3n.apps.googleusercontent.com"
           buttonText="LOG IN WITH GOOGLE"
           onSuccess={responseGoogle}
           onFailure={responseGoogle}
           cookiePolicy={"single_host_origin"}
-          width={140}
         />
-        <Typography>
-          <Link href="#">Forgot password?</Link>
-        </Typography>
-        <Typography>
-          {" "}
+        <Typography style={{margin:"20px auto"}}>
           Do you have an account?
-          <Link href="#">Sign up</Link>
+          <Link href="/register">Sign up</Link>
         </Typography>
       </Paper>
     </Grid>

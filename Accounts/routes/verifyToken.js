@@ -1,6 +1,6 @@
 const { response } = require('express');
 const jwt = require('jsonwebtoken');
-
+const statusCodes = require("../config/configurations").statusCodes;
 module.exports = function(req,res,next) {
     const token = req.header('auth-token');
     if (!token) return res.status(401).send({"Message":'Access denied!'})
@@ -9,6 +9,6 @@ module.exports = function(req,res,next) {
         req.user = verified
         next()
     }catch(err){
-       res.status(400).send({"Message": 'Inavlid token'})
+       res.status(statusCodes.BAD_REQUEST).send({"Message": 'Inavlid token'})
     }
 }
