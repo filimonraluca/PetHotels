@@ -11,12 +11,11 @@ import {
 import PetsIcon from "@material-ui/icons/Pets";
 import GoogleLogin from "react-google-login";
 import { toast } from "react-toastify";
-import { loginUser, createUser} from "../actions/auth";
+import { loginUser, createUser } from "../actions/auth";
 import { useDispatch } from "react-redux";
 
 const Login = ({ history }) => {
   const responseGoogle = async (response) => {
-    console.log(response.tokenId);
     const user = {
       googleId: response.profileObj.googleId,
       firstName: response.profileObj.familyName,
@@ -24,7 +23,6 @@ const Login = ({ history }) => {
       email: response.profileObj.email,
     };
     const createData = await createUser(user);
-    console.log(createData);
     const data = {
       email: response.profileObj.email,
       firstName: response.profileObj.familyName,
@@ -47,10 +45,9 @@ const Login = ({ history }) => {
 
   const paperStyle = {
     padding: 20,
-    height: "70vh",
-    width: "30vw",
     margin: "20px auto",
   };
+  const fieldStyle = { margin: "10px" };
   const handleSubmit = async (e) => {
     if (email === undefined) email = "";
     e.preventDefault();
@@ -76,7 +73,11 @@ const Login = ({ history }) => {
     }
   };
   return (
-    <Grid>
+    <Grid
+      container
+      direction="row"
+      justify="center"
+      alignItems="center">
       <Paper elevation={10} style={paperStyle}>
         <Grid align="center">
           <Avatar style={{ backgroundColor: "#3f51b5" }}>
@@ -84,39 +85,45 @@ const Login = ({ history }) => {
           </Avatar>
           <h2>Log in</h2>
         </Grid>
-        <TextField
-          onChange={(e) => setEmail(e.target.value)}
-          label="Email"
-          placeholder="Enter email"
-          fullWidth
-          required
-        />
-        <TextField
-          onChange={(e) => setPassword(e.target.value)}
-          label="Password"
-          placeholder="Enter password"
-          type="password"
-          fullWidth
-          required
-        />
-        <Button
-          type="submit"
-          onClick={handleSubmit}
-          color="primary"
-          variant="contained"
-          style={{ margin: "20px 0" }}
-          fullWidth
-        >
-          Log in
+        <Grid>
+          <TextField
+            style={fieldStyle}
+            onChange={(e) => setEmail(e.target.value)}
+            label="Email"
+            placeholder="Enter email"
+            required
+          />
+          <TextField
+            style={fieldStyle}
+            onChange={(e) => setPassword(e.target.value)}
+            label="Password"
+            placeholder="Enter password"
+            type="password"
+            required
+          />
+        </Grid>
+        <Grid>
+          <Button
+            fullWidth
+            type="submit"
+            onClick={handleSubmit}
+            color="primary"
+            variant="contained"
+            style={{ margin: "20px auto" }}
+          >
+            Log in
         </Button>
-        <GoogleLogin  style={{margin:"10px auto"}}
+        </Grid>
+        <Grid align="center">
+        <GoogleLogin style={{ margin: "10px auto" }}
           clientId="758960901115-cs1pffg689v2qopd4lvlrqmfl1ivph3n.apps.googleusercontent.com"
           buttonText="LOG IN WITH GOOGLE"
           onSuccess={responseGoogle}
           onFailure={responseGoogle}
           cookiePolicy={"single_host_origin"}
         />
-        <Typography style={{margin:"20px auto"}}>
+        </Grid>
+        <Typography style={{ margin: "20px auto" }}>
           Do you have an account?
           <Link href="/register">Sign up</Link>
         </Typography>

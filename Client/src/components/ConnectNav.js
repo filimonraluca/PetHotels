@@ -7,12 +7,13 @@ const { Meta } = Card;
 const ConnectNav = () => {
   const { auth } = useSelector((state) => ({ ...state }));
   const { user } = auth;
+  console.log("HEREEE" + user)
   return (
     <div className="d-flex justify-content-around">
       <Card>
         <Meta
-          //   avatar={user.name[0]}
-          //   title={user.name}
+         // avatar={user.firstName[0]}
+          //title={user.lastName}
           avatar={<Avatar>A</Avatar>}
           title="Andra Simion"
 

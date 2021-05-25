@@ -5,6 +5,8 @@ import { toast } from "react-toastify";
 import { registerUser} from "../actions/auth";
 import { useDispatch } from "react-redux";
 
+import {RegisterHotel} from "../auth-hotel/register"
+
 const Register = ({ history }) => {
   let [password, setPassword] = useState();
   let [firstName, setFirstName] = useState();
@@ -13,8 +15,6 @@ const Register = ({ history }) => {
   let [phone, setPhone] = useState();
   const paperStyle = {
     padding: 20,
-    height: "60vh",
-    width: "35vw",
     margin: "20px auto",
   };
   const handleSubmit = async (e) => {
@@ -42,7 +42,12 @@ const Register = ({ history }) => {
   const dispatch = useDispatch();
   const fieldStyle = { margin: "10px" };
   return (
-    <Grid>
+    <div>
+    <Grid
+    container
+    direction="row"
+    justify="center"
+    alignItems="center">>
       <Paper elevation={10} style={paperStyle}>
         <Grid align="center">
           <Avatar style={{ backgroundColor: "#3f51b5" }}>
@@ -68,6 +73,7 @@ const Register = ({ history }) => {
               required
             />
           </div>
+          <div>
           <TextField
             style={fieldStyle}
             onChange={(e) => setFirstName(e.target.value)}
@@ -80,6 +86,7 @@ const Register = ({ history }) => {
             label="Last name"
             placeholder="Enter last name"
           />
+          </div>
           <TextField
             style={fieldStyle}
             onChange={(e) => setPhone(e.target.value)}
@@ -99,6 +106,8 @@ const Register = ({ history }) => {
         </Button>
       </Paper>
     </Grid>
+    <RegisterHotel></RegisterHotel>
+    </div>
   );
 };
 
