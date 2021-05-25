@@ -5,6 +5,7 @@ var cors = require('cors')
 
 const userRoute = require('./routes/user')
 const authRoute = require('./routes/auth')
+const hotelRoute = require('./routes/hotel')
 
 //Load config
 dotenv.config({ path: './config/config.env' })
@@ -19,6 +20,7 @@ app.use(cors())
 
 app.use('/api/user', userRoute)
 app.use('/api/auth', authRoute)
+app.use('/api/hotel', hotelRoute)
 
 
 

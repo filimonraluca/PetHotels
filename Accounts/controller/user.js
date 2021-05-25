@@ -21,11 +21,11 @@ async function registerUser(req, res) {
                     email: req.body.email,
                 })
                 user = await User.create(newUser)
-                return { success: true, data: {user} }
+                return { success: true, data: { user } }
             }
 
         }
-        else{
+        else {
             let user = await User.findOne({ email: req.body.email })
             if (user)
                 return { success: false, data: { "message": "You already have an account" } }
@@ -63,12 +63,29 @@ async function loginUser(req, res) {
         //create token
         const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET)
         res.header('auth-token', token)
-        return { success: true, data: { user,token } }
+        return { success: true, data: { user, token } }
 
     } catch (err) {
         return { success: false, data: { err } }
     }
 }
 
+async function getUsers(req, res) {
+    try {
+        let users = await User.find();
+        return { success: true, data: users }
+    } catch (err) {
+        return { success: false, data: { err } }
+    }
+}
 
-module.exports = { registerUser, loginUser }
+async function getUserById(req, res) {
+    try {
+        let user = await User.findById(req.params.userId);
+        return { success: true, data: user }
+    } catch (err) {
+        return { success: false, data: { err } }
+    }
+}
+
+module.exports = { registerUser, loginUser, getUsers,getUserById }
