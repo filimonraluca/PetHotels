@@ -35,4 +35,25 @@ async function sendToken(credentials) {
     body: JSON.stringify(credentials),
   }).then((data) => data.json());
 }
-export { registerUser, loginUser, createUser, sendToken };
+
+async function registerHotel(credentials) {
+  return fetch(`${process.env.REACT_APP_API}/hotel`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(credentials),
+  }).then((data) => data.json());
+}
+
+async function loginHotel(credentials) {
+  return fetch(`${process.env.REACT_APP_API}/hotel/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(credentials),
+  }).then((data) => data.json());
+}
+
+export { registerUser, loginUser, createUser, sendToken, registerHotel, loginHotel };

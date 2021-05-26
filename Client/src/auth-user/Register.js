@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { Grid, Paper, Avatar, TextField, Button } from "@material-ui/core";
 import PetsIcon from "@material-ui/icons/Pets";
 import { toast } from "react-toastify";
-import { registerUser} from "../actions/auth";
+import { loginHotel, registerUser } from "../actions/auth";
 import { useDispatch } from "react-redux";
 
-import {RegisterHotel} from "../auth-hotel/register"
+import { RegisterHotel } from "../auth-hotel/register"
+import { HotelLogIn } from '../auth-hotel/login'
 
 const Register = ({ history }) => {
   let [password, setPassword] = useState();
@@ -43,70 +44,71 @@ const Register = ({ history }) => {
   const fieldStyle = { margin: "10px" };
   return (
     <div>
-    <Grid
-    container
-    direction="row"
-    justify="center"
-    alignItems="center">>
-      <Paper elevation={10} style={paperStyle}>
-        <Grid align="center">
-          <Avatar style={{ backgroundColor: "#3f51b5" }}>
-            <PetsIcon />
-          </Avatar>
-          <h2>Sign in</h2>
-        </Grid>
-        <form>
-          <div>
+      <Grid
+        container
+        direction="row"
+        justify="center"
+        alignItems="center">
+        <Paper elevation={10} style={paperStyle}>
+          <Grid align="center">
+            <Avatar style={{ backgroundColor: "#3f51b5" }}>
+              <PetsIcon />
+            </Avatar>
+            <h2>Sign in</h2>
+          </Grid>
+          <form>
+            <div>
+              <TextField
+                style={fieldStyle}
+                onChange={(e) => setEmail(e.target.value)}
+                label="E-mail"
+                placeholder="Enter e-mail"
+                required
+              />
+              <TextField
+                style={fieldStyle}
+                onChange={(e) => setPassword(e.target.value)}
+                label="Password"
+                placeholder="Enter password"
+                type="password"
+                required
+              />
+            </div>
+            <div>
+              <TextField
+                style={fieldStyle}
+                onChange={(e) => setFirstName(e.target.value)}
+                label="First name"
+                placeholder="Enter first name"
+              />
+              <TextField
+                style={fieldStyle}
+                onChange={(e) => setLastName(e.target.value)}
+                label="Last name"
+                placeholder="Enter last name"
+              />
+            </div>
             <TextField
               style={fieldStyle}
-              onChange={(e) => setEmail(e.target.value)}
-              label="E-mail"
-              placeholder="Enter e-mail"
-              required
+              onChange={(e) => setPhone(e.target.value)}
+              label="Phone"
+              placeholder="Enter phone number"
             />
-            <TextField
-              style={fieldStyle}
-              onChange={(e) => setPassword(e.target.value)}
-              label="Password"
-              placeholder="Enter password"
-              type="password"
-              required
-            />
-          </div>
-          <div>
-          <TextField
-            style={fieldStyle}
-            onChange={(e) => setFirstName(e.target.value)}
-            label="First name"
-            placeholder="Enter first name"
-          />
-          <TextField
-            style={fieldStyle}
-            onChange={(e) => setLastName(e.target.value)}
-            label="Last name"
-            placeholder="Enter last name"
-          />
-          </div>
-          <TextField
-            style={fieldStyle}
-            onChange={(e) => setPhone(e.target.value)}
-            label="Phone"
-            placeholder="Enter phone number"
-          />
-        </form>
-        <Button
-          type="submit"
-          onClick={handleSubmit}
-          color="primary"
-          variant="contained"
-          style={{ margin: "30px 0" }}
-          fullWidth
-        >
-          Sign in
+          </form>
+          <Button
+            type="submit"
+            onClick={handleSubmit}
+            color="primary"
+            variant="contained"
+            style={{ margin: "30px 0" }}
+            fullWidth
+          >
+            Sign in
         </Button>
-      </Paper>
-    </Grid>
-    <RegisterHotel></RegisterHotel>
+        </Paper>
+      </Grid>
+      <RegisterHotel></RegisterHotel>
+      <HotelLogIn></HotelLogIn>
     </div>
   );
 };
