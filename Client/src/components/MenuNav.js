@@ -59,12 +59,22 @@ const MenuNav = () => {
 
           {auth == null && (
             <>
-              <LinkContainer to="/login" style={{ color: "white" }}>
+              <LinkContainer to="/login-user" style={{ color: "white" }}>
                 <Nav.Link>
                   <i className="fas fa-sign-in-alt"></i> Login
                 </Nav.Link>
               </LinkContainer>
-              <LinkContainer to="/register" style={{ color: "white" }}>
+              <LinkContainer to="/register-user" style={{ color: "white" }}>
+                <Nav.Link>
+                  <i className="fas fa-user"></i> Register
+                </Nav.Link>
+              </LinkContainer>
+              <LinkContainer to="/login-hotel" style={{ color: "white" }}>
+                <Nav.Link>
+                  <i className="fas fa-sign-in-alt"></i> Login
+                </Nav.Link>
+              </LinkContainer>
+              <LinkContainer to="/register-hotel" style={{ color: "white" }}>
                 <Nav.Link>
                   <i className="fas fa-user"></i> Register
                 </Nav.Link>

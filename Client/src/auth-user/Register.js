@@ -5,9 +5,6 @@ import { toast } from "react-toastify";
 import { loginHotel, registerUser } from "../actions/auth";
 import { useDispatch } from "react-redux";
 
-import { RegisterHotel } from "../auth-hotel/register"
-import { HotelLogIn } from '../auth-hotel/login'
-
 const Register = ({ history }) => {
   let [password, setPassword] = useState();
   let [firstName, setFirstName] = useState();
@@ -44,11 +41,7 @@ const Register = ({ history }) => {
   const fieldStyle = { margin: "10px" };
   return (
     <div>
-      <Grid
-        container
-        direction="row"
-        justify="center"
-        alignItems="center">
+      <Grid container direction="row" justify="center" alignItems="center">
         <Paper elevation={10} style={paperStyle}>
           <Grid align="center">
             <Avatar style={{ backgroundColor: "#3f51b5" }}>
@@ -104,11 +97,9 @@ const Register = ({ history }) => {
             fullWidth
           >
             Sign in
-        </Button>
+          </Button>
         </Paper>
       </Grid>
-      <RegisterHotel></RegisterHotel>
-      <HotelLogIn></HotelLogIn>
     </div>
   );
 };
