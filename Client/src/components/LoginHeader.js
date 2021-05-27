@@ -6,7 +6,7 @@ const Login = () => {
     <Nav justify variant="tabs" className="mt-2 mb-5">
       <Nav.Item>
         <Nav.Link
-          className={`${active === "/login-user" && "active"}`}
+          className={`${active === "/login-user" && "active"} h5`}
           href="/login-user"
         >
           Login as User
@@ -14,7 +14,7 @@ const Login = () => {
       </Nav.Item>
       <Nav.Item>
         <Nav.Link
-          className={`${active === "/login-hotel" && "active"}`}
+          className={`${active === "/login-hotel" && "active"} h5`}
           href="/login-hotel"
         >
           Login as Provider

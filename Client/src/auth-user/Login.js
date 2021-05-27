@@ -23,11 +23,9 @@ const Login = ({ history }) => {
       lastName: response.profileObj.givenName,
       email: response.profileObj.email,
     };
-    await createUser(user);
+    const res = await createUser(user);
     const data = {
-      email: response.profileObj.email,
-      firstName: response.profileObj.familyName,
-      lastName: response.profileObj.givenName,
+      user: res.data.user,
       token: response.tokenId,
     };
     //const res = await sendToken(token);

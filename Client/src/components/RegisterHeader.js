@@ -6,7 +6,7 @@ const Register = () => {
     <Nav justify variant="tabs" className="mt-2 mb-5">
       <Nav.Item>
         <Nav.Link
-          className={`${active === "/register-user" && "active"}`}
+          className={`${active === "/register-user" && "active"} h5`}
           href="/register-user"
         >
           Register as User
@@ -14,7 +14,7 @@ const Register = () => {
       </Nav.Item>
       <Nav.Item>
         <Nav.Link
-          className={`${active === "/register-hotel" && "active"}`}
+          className={`${active === "/register-hotel" && "active"} h5`}
           href="/register-hotel"
         >
           Register as Provider
