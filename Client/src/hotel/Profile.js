@@ -1,7 +1,7 @@
 import ProfileNav from "../components/ProfileNav";
-import ProfileHeader from "../components/ProfileHeaderUser";
+import ProfileHeader from "../components/ProfileHeaderHotel";
 
-const ProfileBooking = () => {
+const Profile = () => {
   return (
     <>
       <div
@@ -14,10 +14,10 @@ const ProfileBooking = () => {
         <ProfileNav />
       </div>
       <div className="container">
-        <p>Show all the reservations</p>
+        <p>Show all the info about the hotel</p>
       </div>
     </>
   );
 };
 
-export default ProfileBooking;
+export default Profile;

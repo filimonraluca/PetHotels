@@ -1,7 +1,6 @@
 let userState;
 
-if (localStorage.getItem("auth-token")!=="undefined") {
-  console.log(localStorage.getItem("auth-token"));
+if (localStorage.getItem("auth-token") !== "undefined") {
   userState = JSON.parse(localStorage.getItem("auth-token"));
 } else {
   userState = null;

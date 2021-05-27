@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { Grid, Paper, Avatar, TextField, Button } from "@material-ui/core";
 import PetsIcon from "@material-ui/icons/Pets";
 import { toast } from "react-toastify";
-import { loginHotel, registerUser } from "../actions/auth";
+import { registerUser } from "../actions/auth";
 import { useDispatch } from "react-redux";
+import Header from "../components/RegisterHeader";
 
 const Register = ({ history }) => {
   let [password, setPassword] = useState();
@@ -34,20 +35,21 @@ const Register = ({ history }) => {
         type: "SIGN_IN_USER",
         payload: data,
       });
-      history.push("/login");
+      history.push("/login-user");
     }
   };
   const dispatch = useDispatch();
   const fieldStyle = { margin: "10px" };
   return (
     <div>
+      <Header></Header>
       <Grid container direction="row" justify="center" alignItems="center">
         <Paper elevation={10} style={paperStyle}>
           <Grid align="center">
             <Avatar style={{ backgroundColor: "#3f51b5" }}>
               <PetsIcon />
             </Avatar>
-            <h2>Sign in</h2>
+            <h2>Register</h2>
           </Grid>
           <form>
             <div>

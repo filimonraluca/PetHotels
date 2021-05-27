@@ -1,63 +1,69 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { Grid, Paper, Avatar, TextField, Button } from "@material-ui/core";
+import Header from "../components/LoginHeader";
 import PetsIcon from "@material-ui/icons/Pets";
 import { loginHotel } from "../actions/auth";
 import { toast } from "react-toastify";
-async function handleClick(values) {
-  console.log(values);
-  const { email, password } = values;
-  const data = await loginHotel({
-    email,
-    password,
-  });
-  console.log(data);
-  if (data.success === false) toast.error(data.data.message);
-  else {
-    toast.success("LoggedIn successfully");
-    localStorage.setItem("auth-token", JSON.stringify(data.data));
+import { useDispatch } from "react-redux";
+
+const HotelLogIn = ({ history }) => {
+  async function handleClick(e) {
+    if (email === undefined) email = "";
+    e.preventDefault();
+    const data = await loginHotel({
+      email,
+      password,
+    });
+    console.log(data);
+    if (data.success === false) toast.error(data.data.message);
+    else {
+      toast.success("LoggedIn successfully");
+      localStorage.setItem("auth-token", JSON.stringify(data.data));
+      dispatch({
+        type: "LOGGED_IN_USER",
+        payload: data.data,
+      });
+      history.push("/profile");
+    }
   }
-}
-class HotelLogIn extends Component {
-  state = {
-    password: "",
-    email: "",
+
+  let [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+
+  const dispatch = useDispatch();
+
+  const paperStyle = {
+    padding: 20,
+    margin: "20px auto",
   };
-  handleChange = (input) => (e) => {
-    this.setState({ [input]: e.target.value });
-  };
-  render() {
-    const paperStyle = {
-      padding: 20,
-      margin: "20px auto",
-    };
-    const fieldStyle = { padding: "20px" };
-    return (
+  const fieldStyle = { padding: "20px" };
+  return (
+    <>
+      <Header></Header>
       <Grid container direction="row" justify="center" alignItems="center">
         <Paper elevation={10} style={paperStyle}>
           <Grid align="center">
             <Avatar style={{ backgroundColor: "#7c3fb5" }}>
               <PetsIcon />
             </Avatar>
-            <h2>Sign in as provider</h2>
+            <h2>Login as provider</h2>
           </Grid>
           <form>
             <div>
               <TextField
                 style={fieldStyle}
-                onChange={this.handleChange("email")}
+                onChange={(e) => setEmail(e.target.value)}
                 label="E-mail"
                 placeholder="Enter e-mail"
                 required
-                defaultValue={this.state.email}
               />
               <TextField
                 style={fieldStyle}
-                onChange={this.handleChange("password")}
+                onChange={(e) => setPassword(e.target.value)}
                 label="Password"
                 placeholder="Enter password"
                 type="password"
                 required
-                defaultValue={this.state.password}
               />
             </div>
             <Button
@@ -65,14 +71,14 @@ class HotelLogIn extends Component {
               label="Continue"
               color="primary"
               variant="contained"
-              onClick={() => handleClick(this.state)}
+              onClick={handleClick}
             >
               Log in
             </Button>
           </form>
         </Paper>
       </Grid>
-    );
-  }
-}
+    </>
+  );
+};
 export default HotelLogIn;

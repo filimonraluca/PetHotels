@@ -15,7 +15,7 @@ const MenuNav = () => {
       payload: null,
     });
     localStorage.removeItem("auth-token");
-    history.push("/login");
+    history.push("/login-user");
   };
 
   return (
@@ -65,16 +65,6 @@ const MenuNav = () => {
                 </Nav.Link>
               </LinkContainer>
               <LinkContainer to="/register-user" style={{ color: "white" }}>
-                <Nav.Link>
-                  <i className="fas fa-user"></i> Register
-                </Nav.Link>
-              </LinkContainer>
-              <LinkContainer to="/login-hotel" style={{ color: "white" }}>
-                <Nav.Link>
-                  <i className="fas fa-sign-in-alt"></i> Login
-                </Nav.Link>
-              </LinkContainer>
-              <LinkContainer to="/register-hotel" style={{ color: "white" }}>
                 <Nav.Link>
                   <i className="fas fa-user"></i> Register
                 </Nav.Link>

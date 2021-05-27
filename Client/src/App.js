@@ -5,10 +5,10 @@ import PrivateRoute from "./components/PrivateRoute";
 import MenuNav from "./components/MenuNav";
 import Home from "./reservation/Home";
 import LoginUser from "./auth-user/Login";
-import LoginHotel from "./auth-hotel/login";
+import LoginHotel from "./auth-hotel/Login";
 import RegisterUser from "./auth-user/Register";
-import RegisterHotel from "./auth-hotel/register";
-import Profile from "./user/Profile";
+import RegisterHotel from "./auth-hotel/Register";
+import Profile from "./components/Profile";
 import ProfileBooking from "./user/ProfileBooking";
 
 function App() {

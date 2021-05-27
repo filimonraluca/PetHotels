@@ -8,6 +8,7 @@ import {
   Typography,
   Link,
 } from "@material-ui/core";
+import Header from "../components/LoginHeader";
 import PetsIcon from "@material-ui/icons/Pets";
 import GoogleLogin from "react-google-login";
 import { toast } from "react-toastify";
@@ -22,7 +23,7 @@ const Login = ({ history }) => {
       lastName: response.profileObj.givenName,
       email: response.profileObj.email,
     };
-    const createData = await createUser(user);
+    await createUser(user);
     const data = {
       email: response.profileObj.email,
       firstName: response.profileObj.familyName,
@@ -51,10 +52,6 @@ const Login = ({ history }) => {
   const handleSubmit = async (e) => {
     if (email === undefined) email = "";
     e.preventDefault();
-    console.log({
-      email,
-      password,
-    });
     const data = await loginUser({
       email,
       password,
@@ -63,7 +60,6 @@ const Login = ({ history }) => {
     if (data.success === false) toast.error(data.data.message);
     else {
       toast.success("LoggedIn successfully");
-      console.log(data.data.token);
       localStorage.setItem("auth-token", JSON.stringify(data.data));
       dispatch({
         type: "LOGGED_IN_USER",
@@ -73,62 +69,62 @@ const Login = ({ history }) => {
     }
   };
   return (
-    <Grid
-      container
-      direction="row"
-      justify="center"
-      alignItems="center">
-      <Paper elevation={10} style={paperStyle}>
-        <Grid align="center">
-          <Avatar style={{ backgroundColor: "#3f51b5" }}>
-            <PetsIcon />
-          </Avatar>
-          <h2>Log in</h2>
-        </Grid>
-        <Grid>
-          <TextField
-            style={fieldStyle}
-            onChange={(e) => setEmail(e.target.value)}
-            label="Email"
-            placeholder="Enter email"
-            required
-          />
-          <TextField
-            style={fieldStyle}
-            onChange={(e) => setPassword(e.target.value)}
-            label="Password"
-            placeholder="Enter password"
-            type="password"
-            required
-          />
-        </Grid>
-        <Grid>
-          <Button
-            fullWidth
-            type="submit"
-            onClick={handleSubmit}
-            color="primary"
-            variant="contained"
-            style={{ margin: "20px auto" }}
-          >
-            Log in
-        </Button>
-        </Grid>
-        <Grid align="center">
-        <GoogleLogin style={{ margin: "10px auto" }}
-          clientId="758960901115-cs1pffg689v2qopd4lvlrqmfl1ivph3n.apps.googleusercontent.com"
-          buttonText="LOG IN WITH GOOGLE"
-          onSuccess={responseGoogle}
-          onFailure={responseGoogle}
-          cookiePolicy={"single_host_origin"}
-        />
-        </Grid>
-        <Typography style={{ margin: "20px auto" }}>
-          Do you have an account?
-          <Link href="/register">Sign up</Link>
-        </Typography>
-      </Paper>
-    </Grid>
+    <>
+      <Header></Header>
+      <Grid container direction="row" justify="center" alignItems="center">
+        <Paper elevation={10} style={paperStyle}>
+          <Grid align="center">
+            <Avatar style={{ backgroundColor: "#3f51b5" }}>
+              <PetsIcon />
+            </Avatar>
+            <h2>Log in</h2>
+          </Grid>
+          <Grid>
+            <TextField
+              style={fieldStyle}
+              onChange={(e) => setEmail(e.target.value)}
+              label="Email"
+              placeholder="Enter email"
+              required
+            />
+            <TextField
+              style={fieldStyle}
+              onChange={(e) => setPassword(e.target.value)}
+              label="Password"
+              placeholder="Enter password"
+              type="password"
+              required
+            />
+          </Grid>
+          <Grid>
+            <Button
+              fullWidth
+              type="submit"
+              onClick={handleSubmit}
+              color="primary"
+              variant="contained"
+              style={{ margin: "20px auto" }}
+            >
+              Log in
+            </Button>
+          </Grid>
+          <Grid align="center">
+            <GoogleLogin
+              style={{ margin: "10px auto" }}
+              clientId="758960901115-cs1pffg689v2qopd4lvlrqmfl1ivph3n.apps.googleusercontent.com"
+              buttonText="LOG IN WITH GOOGLE"
+              onSuccess={responseGoogle}
+              onFailure={responseGoogle}
+              cookiePolicy={"single_host_origin"}
+            />
+          </Grid>
+          <Typography style={{ margin: "20px auto" }}>
+            Do you have an account?
+            <Link href="/register">Sign up</Link>
+          </Typography>
+        </Paper>
+      </Grid>
+    </>
   );
 };
 export default Login;

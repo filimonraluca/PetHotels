@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import HotelGeneralInfo from "./hotelGeneralInfo";
 import HotelSpecificInfo from "./hotelSpecificInfo";
+import Header from "../components/RegisterHeader";
+
 class RegisterHotel extends Component {
   state = {
     step: 1,
@@ -60,21 +62,29 @@ class RegisterHotel extends Component {
     switch (step) {
       case 1:
         return (
-          <HotelGeneralInfo
-            nextStep={this.nextStep}
-            handleChange={this.handleChange}
-            values={values}
-          />
+          <>
+            <Header></Header>
+            <HotelGeneralInfo
+              nextStep={this.nextStep}
+              handleChange={this.handleChange}
+              values={values}
+            />
+          </>
         );
       case 2:
         return (
-          <HotelSpecificInfo
-            nextStep={this.nextStep}
-            prevStep={this.prevStep}
-            handleChange={this.handleChange}
-            values={values}
-          />
+          <>
+            <Header></Header>
+            <HotelSpecificInfo
+              nextStep={this.nextStep}
+              prevStep={this.prevStep}
+              handleChange={this.handleChange}
+              values={values}
+            />
+          </>
         );
+      default:
+        return <Header />;
     }
   }
 }

@@ -1,5 +1,5 @@
 import ProfileNav from "../components/ProfileNav";
-import ConnectNav from "../components/ConnectNav";
+import ProfileHeader from "../components/ProfileHeaderUser";
 
 const Profile = () => {
   return (
@@ -8,7 +8,7 @@ const Profile = () => {
         className="container-fuild p-5 bg-light"
         style={{ backgroundColor: "#3f51b5" }}
       >
-        <ConnectNav />
+        <ProfileHeader />
       </div>
       <div className="container-fuild p-4">
         <ProfileNav />
