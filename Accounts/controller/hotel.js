@@ -1,7 +1,30 @@
 const Hotel = require('../model/Hotel')
 const bcrypt = require('bcrypt')
+const fetch = require('node-fetch');
 const jwt = require('jsonwebtoken')
 const { registerValidation, loginValidation } = require('./validation/hotel')
+
+async function getLatLong(address){
+    console.log(address)
+    let response;
+    address =  encodeURI(address)
+    await fetch("https://maps.googleapis.com/maps/api/geocode/json?address="+address+"&key=AIzaSyB41hll-FBYVUbwlkrlwGMJhfZy5O_vhg8")
+    .then((data) => {
+        return data.json();
+      })
+      .then((res) => {
+          if (res.error_message)  response = {success: false, data: res.error_message};
+          else
+          {
+            response = { success: true, data: res.results[0].geometry.location };
+          }
+      })
+      .catch((error) => {
+          console.log(error)
+        response = {success: false, data: error.error_message};
+      });
+    return response;
+}
 
 async function registerHotel(req, res) {
     const { error } = registerValidation(req.body)
@@ -13,6 +36,9 @@ async function registerHotel(req, res) {
                 return { success: false, data: { "message": "You already have an account!" } }
             const salt = await bcrypt.genSalt(10);
             const hashPassword = await bcrypt.hash(req.body.password, salt)
+            const latLongResponse = await getLatLong(req.body.address.concat(',',req.body.city))
+            console.log(latLongResponse)
+            console.log(latLongResponse.data.lat, latLongResponse.data.lng)
             const newHotel = new Hotel({
                 password: hashPassword,
                 email: req.body.email,
@@ -23,8 +49,11 @@ async function registerHotel(req, res) {
                 email: req.body.email,
                 phone: req.body.phone,
                 rooms: req.body.rooms,
-                pricePerNight: req.body.pricePerNight
+                pricePerNight: req.body.pricePerNight,
+                lat:latLongResponse.data.lat,
+                lon:latLongResponse.data.lng
             })
+            console.log(newHotel)
             hotel = await Hotel.create(newHotel)
             return { success: true, data: { hotel } }
         } catch (err) {

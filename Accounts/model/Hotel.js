@@ -43,6 +43,14 @@ const hotelSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now
+    },
+    lat: {
+        type:Number,
+        required: false
+    },
+    lon: {
+        type:Number,
+        required:false
     }
 })
 
