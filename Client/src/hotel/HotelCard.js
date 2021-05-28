@@ -1,5 +1,5 @@
 import { Card, Button } from "react-bootstrap";
-import defaultImage from "../images/default-image-620x600.jpg";
+import defaultImage from "../images/dog-header.jpg";
 import { useHistory } from "react-router-dom";
 
 const HotelCard = (props) => {
@@ -24,16 +24,11 @@ const HotelCard = (props) => {
       />
       <Card.Body>
         <Card.Title>{hotel.hotelName}</Card.Title>
-        <Card.Text
-          style={{
-            textOverflow: "ellipsis",
-            overflow: "hidden",
-            whiteSpace: "nowrap",
-          }}
+        <Button
+          className="text-center mt-3"
+          style={{ backgroundColor: "#3f51b5" }}
+          onClick={handleClick}
         >
-          {hotel.hotelDescription}
-        </Card.Text>
-        <Button style={{ backgroundColor: "#3f51b5" }} onClick={handleClick}>
           See details
         </Button>
       </Card.Body>
