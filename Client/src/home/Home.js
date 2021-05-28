@@ -14,7 +14,7 @@ const Home = () => {
           color: "#3f51b5",
         }}
       >
-        Top hotels
+        TOP HOTELS
       </h1>
       <HotelsList />
     </div>

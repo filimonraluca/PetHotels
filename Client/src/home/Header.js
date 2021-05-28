@@ -3,7 +3,6 @@ import {
   Row,
   Col,
   Jumbotron,
-  Form,
   FormControl,
   Button,
 } from "react-bootstrap";
@@ -35,15 +34,16 @@ const Header = () => {
             >
               Find the best place for your pet
             </h1>
-            <Form className="d-flex">
+            <div className="d-flex">
               <FormControl type="text" placeholder="Search" className="m-3" />
               <Button
-                className="p-2 m-3"
+                className="p-3 m-3 d-flex"
                 style={{ backgroundColor: "#3f51b5" }}
               >
-                Search
+                <i className="fas fa-search p-1"></i>
+                <span>Search</span>
               </Button>
-            </Form>
+            </div>
           </Jumbotron>
         </Col>
       </Row>

@@ -4,7 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 import PrivateRoute from "./components/PrivateRoute";
 import MenuNav from "./components/MenuNav";
 import Home from "./home/Home";
-import Hotel from "./hotel/HotelMain";
+import Hotel from "./hotel/HotelPage";
 import LoginUser from "./auth-user/Login";
 import LoginHotel from "./auth-hotel/Login";
 import RegisterUser from "./auth-user/Register";
