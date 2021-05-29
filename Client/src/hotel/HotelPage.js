@@ -20,7 +20,7 @@ const Hotel = () => {
         </Row>
         <Row>
           <Col className="d-flex align-items-center flex-column justify-content-center">
-            <ReservationForm />
+            <ReservationForm hotel={hotel} />
           </Col>
         </Row>
         <Row>

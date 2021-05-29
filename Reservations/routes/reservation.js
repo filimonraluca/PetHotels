@@ -2,6 +2,7 @@ const express = require("express");
 const {
   getAllReservations,
   getReservation,
+  createReservation,
 } = require("../services/ReservationService");
 const statusCodes = require("../config/configurations").statusCodes;
 
@@ -21,14 +22,14 @@ router.get("/:idReservation", async (req, res) => {
   res.status(statusCode).json(result);
 });
 
-// router.post("/", async function (req, res) {
-//   const result = await reservationService.submit(req.body);
-//   const statusCode = result.success
-//     ? statusCodes.CREATED
-//     : statusCodes.BAD_REQUEST;
+router.post("/", async function (req, res) {
+  const result = await createReservation(req.body);
+  const statusCode = result.success
+    ? statusCodes.CREATED
+    : statusCodes.BAD_REQUEST;
 
-//   res.status(statusCode).json(result);
-// });
+  res.status(statusCode).json(result);
+});
 
 // router.patch("/:idReservation", async function (req, res) {
 //   const result = await reservationService.update(

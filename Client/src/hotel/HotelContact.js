@@ -29,10 +29,10 @@ const HotelContact = (props) => {
           <i className="fab fa-facebook-square fa-lg"></i>
         </h3>
         <h3 className="pt-3 pe-3 ps-3" style={{ color: "#3f51b5" }}>
-          <i class="fab fa-instagram fa-lg"></i>
+          <i className="fab fa-instagram fa-lg"></i>
         </h3>
         <h3 className="pt-3 pe-3 ps-3" style={{ color: "#3f51b5" }}>
-          <i class="fab fa-twitter-square fa-lg"></i>
+          <i className="fab fa-twitter-square fa-lg"></i>
         </h3>
       </div>
     </Form>
