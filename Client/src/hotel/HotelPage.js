@@ -3,6 +3,7 @@ import Header from "./HotelHeader";
 import Details from "./HotelDetailsCards";
 import { Container, Row, Col } from "react-bootstrap";
 import ReservationForm from "../reservation/ReservationForm";
+import HotelContact from "./HotelContact";
 
 const Hotel = () => {
   const location = useLocation();
@@ -24,7 +25,13 @@ const Hotel = () => {
         </Row>
         <Row>
           <Col className="d-flex align-items-center flex-column justify-content-center">
-            <h2>Mapa</h2>
+            <h2>Contact us</h2>
+            <HotelContact hotel={hotel} />
+          </Col>
+        </Row>
+        <Row>
+          <Col className="d-flex align-items-center flex-column justify-content-center">
+            <h2>Our Location</h2>
           </Col>
         </Row>
       </Container>
