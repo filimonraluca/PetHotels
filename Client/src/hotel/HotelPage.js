@@ -4,6 +4,7 @@ import Details from "./HotelDetailsCards";
 import { Container, Row, Col } from "react-bootstrap";
 import ReservationForm from "../reservation/ReservationForm";
 import HotelContact from "./HotelContact";
+import HotelMap from "./HotelMap"
 
 const Hotel = () => {
   const location = useLocation();
@@ -30,8 +31,14 @@ const Hotel = () => {
           </Col>
         </Row>
         <Row>
-          <Col className="d-flex align-items-center flex-column justify-content-center">
+
+          <Col className="d-flex align-items-center flex-column justify-content-center ">
             <h2>Our Location</h2>
+          </Col>
+        </Row>
+        <Row >
+          <Col className="d-flex align-items-center flex-column justify-content-center ">
+            <HotelMap hotel={hotel} />
           </Col>
         </Row>
       </Container>

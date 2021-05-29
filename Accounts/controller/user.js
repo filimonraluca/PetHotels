@@ -1,22 +1,27 @@
 const User = require("../model/User");
 const bcrypt = require("bcrypt");
+var ObjectId = require('mongoose').Types.ObjectId;
 const jwt = require("jsonwebtoken");
 const { registerValidation, loginValidation } = require("./validation/user");
+const statusCodes = require("../config/configurations").statusCodes;
 
 async function registerUser(req, res) {
   const { error } = registerValidation(req.body);
-  if (error != null)
+  if (error != null) {
+    res.status(statusCodes.BAD_REQUEST)
     return { success: false, data: { message: error.details[0].message } };
+  }
   try {
     if (req.body.googleId) {
       let user = await User.findOne({ googleId: req.body.googleId });
-      if (user)
+      if (user) {
+        res.status(statusCodes.CONFLICT)
         return {
           success: false,
           data: { message: "User already exists", user: user },
         };
+      }
       else {
-        console.log(req.body);
         const newUser = new User({
           googleId: req.body.googleId,
           firstName: req.body.firstName,
@@ -24,15 +29,18 @@ async function registerUser(req, res) {
           email: req.body.email,
         });
         user = await User.create(newUser);
+        res.status(statusCodes.OK)
         return { success: true, data: { user } };
       }
     } else {
       let user = await User.findOne({ email: req.body.email });
-      if (user)
+      if (user) {
+        res.status(statusCodes.CONFLICT)
         return {
           success: false,
-          data: { message: "You already have an account" },
+          data: { message: "You already have an account", user: user },
         };
+      }
       const salt = await bcrypt.genSalt(10);
       const hashPassword = await bcrypt.hash(req.body.password, salt);
       const newUser = new User({
@@ -43,9 +51,11 @@ async function registerUser(req, res) {
         phone: req.body.phone,
       });
       user = await User.create(newUser);
+      res.status(statusCodes.OK)
       return { success: true, data: { user } };
     }
   } catch (err) {
+    res.status(statusCodes.BAD_REQUEST)
     return { success: false, data: { err } };
   }
 }
@@ -76,8 +86,10 @@ async function loginUser(req, res) {
 async function getUsers(req, res) {
   try {
     let users = await User.find();
+    res.status(statusCodes.OK)
     return { success: true, data: users };
   } catch (err) {
+    res.status(statusCodes.BAD_REQUEST)
     return { success: false, data: { err } };
   }
 }
@@ -85,10 +97,62 @@ async function getUsers(req, res) {
 async function getUserById(req, res) {
   try {
     let user = await User.findById(req.params.userId);
-    return { success: true, data: user };
+    if (user) {
+      res.status(statusCodes.OK)
+      return { success: true, data: user };
+    }
+    else {
+      res.status(statusCodes.NOT_FOUND)
+      return { success: false, data: "User not found!" };
+    }
   } catch (err) {
+    res.status(statusCodes.BAD_REQUEST)
     return { success: false, data: { err } };
   }
 }
 
-module.exports = { registerUser, loginUser, getUsers, getUserById };
+async function changeUserInfo(req, res) {
+  const result = await getUserById(req, res)
+  if (result.success) {
+    const user = result.data;
+    console.log(req.body.lastName)
+    if (req.body.firstName && req.body.lastName && req.body.password && req.body.email && req.body.phone) {
+      if (req.body.password != user.password) {
+        res.status(statusCodes.NOT_ALLOWED)
+        return { success: false, data: { message: "Method not allowed" } };
+      }
+      try {
+        let doc = await User.findOneAndUpdate({ _id: new ObjectId(req.params.userId) }, req.body, {
+          new: true
+        });
+        res.status(statusCodes.OK)
+        return { success: true, data: { doc } };
+      }
+      catch (err) {
+        res.status(statusCodes.BAD_REQUEST)
+        return { success: false, data: { err } };
+      }
+    }
+    else {
+      res.status(statusCodes.NOT_ALLOWED)
+      return { success: false, data: { message: "Method not allowed" } }
+    }
+  } else return result;
+}
+
+async function deleteUser(req, res) {
+  const result = await getUserById(req, res)
+  if (result.success) {
+    try {
+      const del_res = await User.deleteOne({ _id: new ObjectId(req.params.userId) });
+      res.status(statusCodes.OK)
+      return { success: true, data: { message: "Successfully deleted account!" } };
+    } catch (err) {
+      res.status(statusCodes.NOT_FOUND)
+      return { success: false, data: { err } };
+    }
+  }
+  else return result;
+}
+
+module.exports = { registerUser, loginUser, getUsers, getUserById, changeUserInfo, deleteUser };
