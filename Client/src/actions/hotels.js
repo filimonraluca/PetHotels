@@ -3,4 +3,14 @@ async function getHotels(credentials) {
     data.json()
   );
 }
-export { getHotels };
+async function updateHotel(data, id, token) {
+  return fetch(`${process.env.REACT_APP_API}/hotel/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token,
+    },
+    body: JSON.stringify(data),
+  }).then((data) => data.json());
+}
+export { getHotels, updateHotel };
