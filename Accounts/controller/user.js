@@ -50,7 +50,7 @@ async function registerUser(req, res) {
         phone: req.body.phone,
       });
       user = await User.create(newUser);
-      res.status(statusCodes.OK);
+      res.status(statusCodes.CREATED);
       return { success: true, data: { user } };
     }
   } catch (err) {

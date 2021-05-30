@@ -60,7 +60,7 @@ router.delete("/", (req, res) => {
   res.json({ message: "Method Not Allowed" });
 });
 
-router.delete("/:userId", async (req, res) => {
+router.delete("/:userId", verifyToken, async (req, res) => {
   const result = await deleteUser(req, res);
   res.json(result);
 });
