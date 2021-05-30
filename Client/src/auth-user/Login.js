@@ -12,7 +12,7 @@ import Header from "../components/LoginHeader";
 import PetsIcon from "@material-ui/icons/Pets";
 import GoogleLogin from "react-google-login";
 import { toast } from "react-toastify";
-import { loginUser, createUser, loginGoogle } from "../actions/auth";
+import { loginUser, loginGoogle } from "../actions/auth";
 import { useDispatch } from "react-redux";
 
 const Login = ({ history }) => {
@@ -26,7 +26,7 @@ const Login = ({ history }) => {
     const res = await loginGoogle(user);
     const data = {
       user: res.data.user,
-      token:res.data.token,
+      token: res.data.token,
     };
     //const res = await sendToken(token);
     localStorage.setItem("auth-token", JSON.stringify(data));
