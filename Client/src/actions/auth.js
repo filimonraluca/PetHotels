@@ -26,8 +26,8 @@ async function createUser(credentials) {
   }).then((data) => data.json());
 }
 
-async function sendToken(credentials) {
-  return fetch(`${process.env.REACT_APP_API}/auth/google`, {
+async function loginGoogle(credentials) {
+  return fetch(`${process.env.REACT_APP_API}/user/login/google`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -56,4 +56,4 @@ async function loginHotel(credentials) {
   }).then((data) => data.json());
 }
 
-export { registerUser, loginUser, createUser, sendToken, registerHotel, loginHotel };
+export { registerUser, loginUser, createUser,loginGoogle, registerHotel, loginHotel };

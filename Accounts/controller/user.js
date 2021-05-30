@@ -76,13 +76,27 @@ async function loginUser(req, res) {
 
     //create token
     const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
-    res.header("auth-token", token);
     return { success: true, data: { user, token } };
   } catch (err) {
     return { success: false, data: { err } };
   }
 }
 
+async function loginGoogleUser(req, res) {
+  console.log("HEREEE")
+  try {
+    let user = await User.findOne({ googleId: req.body.googleId });
+    if (!user) {
+      const response = await registerUser(req, res)
+      return response;
+    }
+    //create token
+    const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
+    return { success: true, data: { user, token } };
+  } catch (err) {
+    return { success: false, data: { err } };
+  }
+}
 async function getUsers(req, res) {
   try {
     let users = await User.find();
@@ -155,4 +169,4 @@ async function deleteUser(req, res) {
   else return result;
 }
 
-module.exports = { registerUser, loginUser, getUsers, getUserById, changeUserInfo, deleteUser };
+module.exports = { registerUser, loginUser, getUsers, getUserById, changeUserInfo, deleteUser, loginGoogleUser };
