@@ -13,11 +13,13 @@ console.log(process.env.PORT);
 module.exports = {
   port: process.env.PORT || 5000,
   databaseURL: process.env.MONGO_URI,
+  tokenSecret: process.env.TOKEN_SECRET,
   statusCodes: {
     BAD_REQUEST: 400,
     OK: 200,
     CREATED: 201,
     ACCEPTED: 202,
     NO_CONTENT: 204,
+    UNAUTHORIZED: 401,
   },
 };

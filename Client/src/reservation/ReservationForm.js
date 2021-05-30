@@ -24,14 +24,17 @@ const ReservationForm = (props) => {
       const hotelId = hotel._id;
       const hotelPrice = hotel.pricePerNight;
 
-      const data = await createReservation({
-        userId,
-        hotelId,
-        hotelPrice,
-        reservationStartDate,
-        reservationEndDate,
-        onlinePayment,
-      });
+      const data = await createReservation(
+        {
+          userId,
+          hotelId,
+          hotelPrice,
+          reservationStartDate,
+          reservationEndDate,
+          onlinePayment,
+        },
+        auth.token
+      );
       console.log(data);
       if (data.success === false) toast.error(data.error.message);
       else {

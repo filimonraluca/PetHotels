@@ -13,7 +13,7 @@ const app = express();
 app.enable("trust proxy");
 app.use(express.json());
 app.use(cors());
-app.use("/api/reservation", reservationRoute);
+app.use("/api/reservation", verify, reservationRoute);
 
 const PORT = config.port;
 app.listen(
