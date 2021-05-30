@@ -68,7 +68,8 @@ async function loginUser(req, res) {
     let user = await User.findOne({ email: req.body.email });
     if (!user)
       return { success: false, data: { message: "Email does not exists" } };
-
+    if (!user.password)
+      return { success: false, data: { message: "You are logged in with google!" } };
     //verify password
     const validPass = await bcrypt.compare(req.body.password, user.password);
     if (!validPass)
