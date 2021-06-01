@@ -33,4 +33,22 @@ async function createReservation(body, token) {
     body: JSON.stringify(body),
   }).then((data) => data.json());
 }
-export { getReservationsByUser, getReservationsByHotel, createReservation };
+
+async function deleteReservation(reservationId, token) {
+  return fetch(
+    `${process.env.REACT_APP_RESERVATION_API}/reservation/${reservationId}`,
+    {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    }
+  ).catch((error) => error);
+}
+export {
+  getReservationsByUser,
+  getReservationsByHotel,
+  createReservation,
+  deleteReservation,
+};

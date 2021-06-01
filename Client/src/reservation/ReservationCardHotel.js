@@ -1,13 +1,16 @@
 import { Card, Button, ListGroup, Spinner } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import React, { useState, useEffect } from "react";
 import { getHotelById } from "../actions/hotels";
+import { deleteReservation } from "../actions/reservations";
+import { toast } from "react-toastify";
 
 const ReservationCard = (props) => {
   const reservation = props.reservation;
   const history = useHistory();
   const dispatch = useDispatch();
+  const { auth } = useSelector((state) => ({ ...state }));
 
   const [hotel, setHotel] = useState();
   const [loading, setLoading] = useState(true);
@@ -32,14 +35,15 @@ const ReservationCard = (props) => {
     history.push("/hotel");
   };
 
-  const deleteReservation = async (e) => {
+  const deleteReservationButton = async (e) => {
     e.preventDefault();
-    localStorage.setItem("clicked-hotel", JSON.stringify(hotel));
-    dispatch({
-      type: "CLICKED_HOTEL",
-      payload: hotel,
-    });
-    history.push("/hotel");
+
+    const response = await deleteReservation(reservation._id, auth.token);
+    if (response.status !== 204) {
+      toast.error(response.error.message);
+    } else {
+      toast.success("Reservation deleted successfully");
+    }
   };
 
   if (loading) {
@@ -82,7 +86,7 @@ const ReservationCard = (props) => {
           <Button
             className="text-center m-3"
             style={{ backgroundColor: "#3f51b5" }}
-            onClick={deleteReservation}
+            onClick={deleteReservationButton}
           >
             Delete
           </Button>
