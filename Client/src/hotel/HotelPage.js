@@ -1,14 +1,13 @@
-import { useLocation } from "react-router-dom";
 import Header from "./HotelHeader";
 import Details from "./HotelDetailsCards";
 import { Container, Row, Col } from "react-bootstrap";
 import ReservationForm from "../reservation/ReservationForm";
 import HotelContact from "./HotelContact";
-import HotelMap from "./HotelMap"
+import HotelMap from "./HotelMap";
+import { useSelector } from "react-redux";
 
 const Hotel = () => {
-  const location = useLocation();
-  const hotel = location.state;
+  const { hotel } = useSelector((state) => ({ ...state }));
   return (
     <div className="d-flex align-items-center flex-column justify-content-center">
       <Header hotel={hotel} />
@@ -31,12 +30,11 @@ const Hotel = () => {
           </Col>
         </Row>
         <Row>
-
           <Col className="d-flex align-items-center flex-column justify-content-center ">
             <h2>Our Location</h2>
           </Col>
         </Row>
-        <Row >
+        <Row>
           <Col className="d-flex align-items-center flex-column justify-content-center ">
             <HotelMap hotel={hotel} />
           </Col>

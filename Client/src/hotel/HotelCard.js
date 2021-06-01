@@ -1,14 +1,21 @@
 import { Card, Button } from "react-bootstrap";
 import defaultImage from "../images/dog-header.jpg";
 import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 const HotelCard = (props) => {
   const hotel = props.hotel;
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const handleClick = async (e) => {
     e.preventDefault();
-    history.push({ pathname: "/hotel", state: hotel });
+    localStorage.setItem("clicked-hotel", JSON.stringify(hotel));
+    dispatch({
+      type: "CLICKED_HOTEL",
+      payload: hotel,
+    });
+    history.push("/hotel");
   };
 
   return (

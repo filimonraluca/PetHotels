@@ -2,7 +2,6 @@ import { Form } from "react-bootstrap";
 
 const HotelContact = (props) => {
   const hotel = props.hotel;
-  console.log(hotel)
   return (
     <Form
       className="w-50 p-5 m-5 d-flex align-items-center flex-column justify-content-center"

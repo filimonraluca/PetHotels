@@ -1,18 +1,40 @@
 import React, { useState } from "react";
-import { Row, Col, Form, Button, Toast } from "react-bootstrap";
+import { Row, Col, Form, Button } from "react-bootstrap";
 import { createReservation } from "../actions/reservations";
 import { toast } from "react-toastify";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import OnlinePayment from "./OnlinePayment"
+import OnlinePayment from "./OnlinePayment";
 
 const ReservationForm = (props) => {
   const history = useHistory();
+  const dispatch = useDispatch();
+  let { reservation } = useSelector((state) => ({ ...state }));
+
+  if (reservation == null) {
+    const resData = {
+      onlinePayment: false,
+      payed: false,
+    };
+    localStorage.setItem("current-reservation", JSON.stringify(resData));
+    dispatch({
+      type: "RESERVATION",
+      payload: resData,
+    });
+  }
+
+  reservation = useSelector((state) => ({ ...state })).reservation;
+
   const { auth } = useSelector((state) => ({ ...state }));
-  const [reservationStartDate, setStartDate] = useState();
-  const [reservationEndDate, setEndDate] = useState();
-  const [onlinePayment, setOnlinePayment] = useState(false);
-  const [payed, setPayed] = useState(false)
+  const [reservationStartDate, setStartDate] = useState(
+    reservation.reservationStartDate
+  );
+  const [reservationEndDate, setEndDate] = useState(
+    reservation.reservationEndDate
+  );
+  const [onlinePayment, setOnlinePayment] = useState(reservation.onlinePayment);
+  const [payed, setPayed] = useState(reservation.payed);
+
   let totalPrice = 0;
 
   async function handleClick(e) {
@@ -35,7 +57,7 @@ const ReservationForm = (props) => {
           reservationStartDate,
           reservationEndDate,
           onlinePayment,
-          payed
+          payed,
         },
         auth.token
       );
@@ -43,32 +65,42 @@ const ReservationForm = (props) => {
       if (data.success === false) toast.error(data.error.message);
       else {
         toast.success("Reservation created successfully");
+        reservation.reservationStartDate = null;
+        reservation.reservationEndDate = null;
+        reservation.onlinePayment = false;
+        reservation.payed = false;
+        localStorage.setItem(
+          "current-reservation",
+          JSON.stringify(reservation)
+        );
+        dispatch({
+          type: "RESERVATION",
+          payload: reservation,
+        });
+        history.push("/profile/bookings");
       }
     }
   }
 
   function validateDate() {
-    if (onlinePayment)
-    {
-      const startDate = new Date(reservationStartDate)
-      const endDate = new Date(reservationEndDate)
-      const currentDate = new Date()
-      if (endDate - startDate > 0 && startDate>=currentDate && endDate>currentDate) {
-        totalPrice = ((endDate - startDate) / 86400000)*props.hotel.pricePerNight;
+    if (onlinePayment) {
+      const startDate = new Date(reservationStartDate);
+      const endDate = new Date(reservationEndDate);
+      const currentDate = new Date();
+      if (
+        endDate - startDate > 0 &&
+        startDate >= currentDate &&
+        endDate > currentDate
+      ) {
+        totalPrice =
+          ((endDate - startDate) / 86400000) * props.hotel.pricePerNight;
         return true;
       }
-      return false
+      return false;
     }
-    return false
+    return false;
   }
 
-  // let onlinePaymentButton = <div></div>;
-  // if (onlinePayment) {
-  //   if (validateDate(reservationStartDate,reservationEndDate))
-  //     onlinePaymentButton = <OnlinePayment
-  //       setPayed={setPayed}
-  //       totalPrice={totalPrice}></OnlinePayment>;
-  // }
   return (
     <Form
       className="w-50 p-5 m-5"
@@ -81,7 +113,19 @@ const ReservationForm = (props) => {
             type="date"
             name="startDate"
             placeholder="Check in"
-            onChange={(e) => setStartDate(e.target.value)}
+            value={reservation.reservationStartDate}
+            onChange={(e) => {
+              setStartDate(e.target.value);
+              reservation.reservationStartDate = e.target.value;
+              localStorage.setItem(
+                "current-reservation",
+                JSON.stringify(reservation)
+              );
+              dispatch({
+                type: "RESERVATION",
+                payload: reservation,
+              });
+            }}
           />
         </Form.Group>
 
@@ -91,7 +135,19 @@ const ReservationForm = (props) => {
             type="date"
             name="endDate"
             placeholder="Check out"
-            onChange={(e) => setEndDate(e.target.value)}
+            value={reservation.reservationEndDate}
+            onChange={(e) => {
+              setEndDate(e.target.value);
+              reservation.reservationEndDate = e.target.value;
+              localStorage.setItem(
+                "current-reservation",
+                JSON.stringify(reservation)
+              );
+              dispatch({
+                type: "RESERVATION",
+                payload: reservation,
+              });
+            }}
           />
         </Form.Group>
       </Row>
@@ -99,12 +155,27 @@ const ReservationForm = (props) => {
         <Form.Check
           type="checkbox"
           label="Online payment"
-          onChange={(e) => setOnlinePayment(!onlinePayment)}
+          defaultChecked={reservation.onlinePayment}
+          onChange={(e) => {
+            setOnlinePayment(!onlinePayment);
+            reservation.onlinePayment = !onlinePayment;
+            localStorage.setItem(
+              "current-reservation",
+              JSON.stringify(reservation)
+            );
+            dispatch({
+              type: "RESERVATION",
+              payload: reservation,
+            });
+          }}
         />
       </Form.Group>
-      {validateDate()? <OnlinePayment
-        setPayed={setPayed}
-        totalPrice={totalPrice}></OnlinePayment> : <></>}
+      {validateDate() && (
+        <OnlinePayment
+          setPayed={setPayed}
+          totalPrice={totalPrice}
+        ></OnlinePayment>
+      )}
       <Form.Group as={Row} className="mb-3">
         <Button
           type="submit"
