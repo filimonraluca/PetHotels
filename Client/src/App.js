@@ -10,7 +10,7 @@ import LoginHotel from "./auth-hotel/Login";
 import RegisterUser from "./auth-user/Register";
 import RegisterHotel from "./auth-hotel/Register";
 import Profile from "./components/Profile";
-import ProfileBooking from "./user/ProfileBooking";
+import ProfileBooking from "./components/ProfileBooking";
 
 function App() {
   return (

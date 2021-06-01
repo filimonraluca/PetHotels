@@ -8,7 +8,6 @@ module.exports = function (req, res, next) {
     return;
   }
   try {
-    console.log(req.headers.authorization);
     const token = req.headers.authorization.split(" ");
     if (token[0] === "Bearer" && jwt.verify(token[1], config.tokenSecret))
       next();

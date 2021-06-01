@@ -28,6 +28,36 @@ async function getReservation(idReservation) {
   }
 }
 
+async function getReservationByUser(idUser) {
+  try {
+    const reservations = await Reservation.find({
+      userId: idUser,
+    });
+
+    return { success: true, data: { reservations } };
+  } catch (error) {
+    return {
+      success: false,
+      error: { message: error.message },
+    };
+  }
+}
+
+async function getReservationByHotel(idHotel) {
+  try {
+    const reservations = await Reservation.find({
+      hotelId: idHotel,
+    });
+
+    return { success: true, data: { reservations } };
+  } catch (error) {
+    return {
+      success: false,
+      error: { message: error.message },
+    };
+  }
+}
+
 async function createReservation(payload) {
   const {
     userId,
@@ -36,7 +66,7 @@ async function createReservation(payload) {
     reservationStartDate,
     reservationEndDate,
     onlinePayment,
-    payed
+    payed,
   } = payload;
 
   const numberOfNights = Math.ceil(
@@ -55,7 +85,7 @@ async function createReservation(payload) {
     onlinePayment,
     numberOfNights,
     totalPrice,
-    payed
+    payed,
   };
 
   try {
@@ -132,4 +162,10 @@ async function createReservation(payload) {
 //   }
 // }
 
-module.exports = { getAllReservations, getReservation, createReservation };
+module.exports = {
+  getAllReservations,
+  getReservation,
+  getReservationByUser,
+  getReservationByHotel,
+  createReservation,
+};

@@ -1,5 +1,5 @@
 import ProfileNav from "../components/ProfileNav";
-import ProfileHeader from "../components/ProfileHeaderUser";
+import ProfileHeader from "../components/ProfileHeaderHotel";
 import Bookings from "./Bookings";
 
 const ProfileBooking = () => {
