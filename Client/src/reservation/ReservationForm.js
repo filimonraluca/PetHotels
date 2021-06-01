@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Row, Col, Form, Button } from "react-bootstrap";
+import { Row, Col, Form, Button, Toast } from "react-bootstrap";
 import { createReservation } from "../actions/reservations";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
+import OnlinePayment from "./OnlinePayment"
 
 const ReservationForm = (props) => {
   const history = useHistory();
@@ -11,6 +12,8 @@ const ReservationForm = (props) => {
   const [reservationStartDate, setStartDate] = useState();
   const [reservationEndDate, setEndDate] = useState();
   const [onlinePayment, setOnlinePayment] = useState(false);
+  const [payed, setPayed] = useState(false)
+  let totalPrice = 0;
 
   async function handleClick(e) {
     e.preventDefault();
@@ -32,6 +35,7 @@ const ReservationForm = (props) => {
           reservationStartDate,
           reservationEndDate,
           onlinePayment,
+          payed
         },
         auth.token
       );
@@ -43,6 +47,28 @@ const ReservationForm = (props) => {
     }
   }
 
+  function validateDate() {
+    if (onlinePayment)
+    {
+      const startDate = new Date(reservationStartDate)
+      const endDate = new Date(reservationEndDate)
+      const currentDate = new Date()
+      if (endDate - startDate > 0 && startDate>=currentDate && endDate>currentDate) {
+        totalPrice = ((endDate - startDate) / 86400000)*props.hotel.pricePerNight;
+        return true;
+      }
+      return false
+    }
+    return false
+  }
+
+  // let onlinePaymentButton = <div></div>;
+  // if (onlinePayment) {
+  //   if (validateDate(reservationStartDate,reservationEndDate))
+  //     onlinePaymentButton = <OnlinePayment
+  //       setPayed={setPayed}
+  //       totalPrice={totalPrice}></OnlinePayment>;
+  // }
   return (
     <Form
       className="w-50 p-5 m-5"
@@ -76,11 +102,15 @@ const ReservationForm = (props) => {
           onChange={(e) => setOnlinePayment(!onlinePayment)}
         />
       </Form.Group>
+      {validateDate()? <OnlinePayment
+        setPayed={setPayed}
+        totalPrice={totalPrice}></OnlinePayment> : <></>}
       <Form.Group as={Row} className="mb-3">
         <Button
           type="submit"
           style={{ backgroundColor: "#3f51b5" }}
           onClick={handleClick}
+          disabled={onlinePayment ^ payed}
         >
           Book Now
         </Button>

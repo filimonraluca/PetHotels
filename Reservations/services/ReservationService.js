@@ -36,6 +36,7 @@ async function createReservation(payload) {
     reservationStartDate,
     reservationEndDate,
     onlinePayment,
+    payed
   } = payload;
 
   const numberOfNights = Math.ceil(
@@ -54,6 +55,7 @@ async function createReservation(payload) {
     onlinePayment,
     numberOfNights,
     totalPrice,
+    payed
   };
 
   try {
