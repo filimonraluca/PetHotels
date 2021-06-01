@@ -100,67 +100,36 @@ async function createReservation(payload) {
   }
 }
 
-// async function findByRestaurant(restaurantId) {
-//   try {
-//     const reservations = await this.db.Reservation.find({
-//       restaurantId,
-//     });
+async function updateReservation(idReservation, payload) {
+  try {
+    const reservation = await Reservation.updateOne(
+      { _id: idReservation },
+      payload
+    );
 
-//     return { success: true, data: { reservations } };
-//   } catch (error) {
-//     return {
-//       success: false,
-//       error: { message: error.message },
-//     };
-//   }
-// }
+    return { success: true, data: { reservation } };
+  } catch (error) {
+    return {
+      success: false,
+      error: { message: error.message },
+    };
+  }
+}
 
-// async function update(idReservation, payload) {
-//   try {
-//     const reservation = await this.db.Reservation.updateOne(
-//       { _id: idReservation },
-//       payload
-//     );
+async function deleteReservation(idReservation) {
+  try {
+    const reservation = await Reservation.deleteOne({
+      _id: idReservation,
+    });
 
-//     return { success: true, data: { reservation } };
-//   } catch (error) {
-//     Logger.error(error);
-//     return {
-//       success: false,
-//       error: { message: error.message },
-//     };
-//   }
-// }
-
-// async function deleteAll() {
-//   try {
-//     const reservation = await this.db.Reservation.deleteMany({});
-
-//     return { success: true, data: { reservation } };
-//   } catch (error) {
-//     Logger.error(error);
-//     return {
-//       success: false,
-//       error: { message: error.message },
-//     };
-//   }
-// }
-
-// async function deleteReservation(idReservation) {
-//   try {
-//     const reservation = await this.db.Reservation.deleteOne({
-//       _id: idReservation,
-//     });
-
-//     return { success: true, data: { reservation } };
-//   } catch (error) {
-//     Logger.error(error);
-//     return {
-//       success: false,
-//       error: { message: error.message },
-//     };
-//   }
-// }
+    return { success: true, data: { reservation } };
+  } catch (error) {
+    return {
+      success: false,
+      error: { message: error.message },
+    };
+  }
+}
 
 module.exports = {
   getAllReservations,
@@ -168,4 +137,6 @@ module.exports = {
   getReservationByUser,
   getReservationByHotel,
   createReservation,
+  updateReservation,
+  deleteReservation,
 };

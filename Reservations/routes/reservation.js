@@ -5,6 +5,8 @@ const {
   getReservationByUser,
   getReservationByHotel,
   createReservation,
+  updateReservation,
+  deleteReservation,
 } = require("../services/ReservationService");
 const statusCodes = require("../config/configurations").statusCodes;
 
@@ -47,26 +49,22 @@ router.post("/", async function (req, res) {
   res.status(statusCode).json(result);
 });
 
-// router.patch("/:idReservation", async function (req, res) {
-//   const result = await reservationService.update(
-//     req.params.idReservation,
-//     req.body
-//   );
-//   const statusCode = result.success
-//     ? statusCodes.ACCEPTED
-//     : statusCodes.BAD_REQUEST;
+router.put("/:idReservation", async function (req, res) {
+  const result = await updateReservation(req.params.idReservation, req.body);
+  const statusCode = result.success
+    ? statusCodes.NO_CONTENT
+    : statusCodes.BAD_REQUEST;
 
-//   res.status(statusCode).json(result);
-// });
+  res.status(statusCode).json(result);
+});
 
-// router.delete("/:idReservation", async (req, res) => {
-//   const result = await reservationService.deleteReservation(
-//     req.params.idReservation
-//   );
-//   const statusCode = result.success
-//     ? statusCodes.NO_CONTENT
-//     : statusCodes.BAD_REQUEST;
+router.delete("/:idReservation", async (req, res) => {
+  const result = await deleteReservation(req.params.idReservation);
+  const statusCode = result.success
+    ? statusCodes.NO_CONTENT
+    : statusCodes.BAD_REQUEST;
 
-//   res.status(statusCode).json(result);
-// });
+  res.status(statusCode).json(result);
+});
+
 module.exports = router;
