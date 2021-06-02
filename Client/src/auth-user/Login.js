@@ -17,6 +17,8 @@ import { useDispatch } from "react-redux";
 
 const Login = ({ history }) => {
   const responseGoogle = async (response) => {
+    console.log("HEREE")
+    console.log(response)
     const user = {
       googleId: response.profileObj.googleId,
       firstName: response.profileObj.familyName,

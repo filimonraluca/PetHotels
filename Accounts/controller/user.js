@@ -138,10 +138,6 @@ async function changeUserInfo(req, res) {
       req.body.email &&
       req.body.phone
     ) {
-      if (req.body.password != user.password) {
-        res.status(statusCodes.NOT_ALLOWED);
-        return { success: false, data: { message: "Method not allowed" } };
-      }
       try {
         let doc = await User.findOneAndUpdate(
           { _id: new ObjectId(req.params.userId) },
